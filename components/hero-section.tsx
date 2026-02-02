@@ -92,10 +92,10 @@ export default function HeroSection() {
     
     return (
         <main className="overflow-x-hidden">
-            <section className='min-h-dvh overflow-hidden'>
-                <div
-                    className="pb-6 pt-16 lg:pb-8 lg:pt-36 lg:grid lg:grid-cols-2 lg:grid-rows-1 grid-cols-1 grid-rows-2 items-start">
-                    <div className="relative mx-auto flex max-w-xl flex-col px-6 lg:block">
+            <section className='min-h-dvh overflow-hidden flex flex-col lg:relative'>
+                {/* Left content - shrinks to fit on mobile, fixed width on desktop */}
+                <div className="flex-shrink-0 pb-4 pt-6 sm:pt-8 lg:pb-8 lg:pt-36 lg:w-1/2 relative z-10">
+                    <div className="relative mx-auto flex max-w-xl flex-col px-4 sm:px-6 lg:block">
                         <div className="mx-auto max-w-2xl text-center lg:ml-0 lg:text-left">
                             {/* Status Pill */}
                             <div className='mb-2 flex justify-center lg:justify-start'>
@@ -126,7 +126,7 @@ export default function HeroSection() {
                             </div>
                             
                             {/* Schedule Block */}
-                            <div className="mt-4 rounded-xl bg-white/6 backdrop-blur-2xl p-4 relative overflow-hidden">
+                            <div className="mt-3 sm:mt-4 rounded-xl bg-white/6 backdrop-blur-2xl p-3 sm:p-4 relative overflow-hidden">
                                 {isEventCompleted && (
                                     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/90 text-center gap-4">
                                         <span className="text-md font-geist text-white">Thank you for attending the event!!!</span>
@@ -134,8 +134,8 @@ export default function HeroSection() {
                                         <span className="text-sm font-geist text-white">- RF</span>
                                     </div>
                                 )}
-                                <h3 className="mb-4 text-lg font-semibold text-white">Schedule</h3>
-                                <div className="space-y-2">
+                                <h3 className="mb-2 sm:mb-4 text-base sm:text-lg font-semibold text-white">Schedule</h3>
+                                <div className="space-y-1 sm:space-y-2">
                                     {scheduleTimes.map((item, index) => {
                                         const hour24 = Math.floor(item.start / 60);
                                         const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
@@ -147,7 +147,7 @@ export default function HeroSection() {
                                         return (
                                             <div 
                                                 key={index} 
-                                                className={`flex items-center gap-3 p-2 rounded-lg transition-all duration-300 ${
+                                                className={`flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg transition-all duration-300 ${
                                                     isActive 
                                                         ? 'bg-white/20 border border-white/30' 
                                                         : isPast 
@@ -155,7 +155,7 @@ export default function HeroSection() {
                                                             : ''
                                                 }`}
                                             >
-                                                <span className={`text-sm font-mono min-w-[80px] ${
+                                                <span className={`text-xs sm:text-sm font-mono min-w-[70px] sm:min-w-[80px] ${
                                                     isActive
                                                         ? 'text-white'
                                                         : isInactiveDay
@@ -164,7 +164,7 @@ export default function HeroSection() {
                                                 }`}>
                                                     {startTime}
                                                 </span>
-                                                <span className={`text-sm font-medium ${
+                                                <span className={`text-xs sm:text-sm font-medium ${
                                                     isActive
                                                         ? 'text-white'
                                                         : isInactiveDay
@@ -187,7 +187,7 @@ export default function HeroSection() {
                             </div>
                             
                             {/* Action Buttons */}
-                            <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
+                            <div className="mt-3 sm:mt-4 flex flex-col items-center justify-center gap-2 sm:gap-3 sm:flex-row sm:flex-wrap lg:justify-start">
                                 <Button
                                     asChild
                                     size="default"
@@ -230,11 +230,12 @@ export default function HeroSection() {
                             </div>
                         </div>
                     </div>
-                    <LanyardWithControls 
-                             position={[0, 6, 20]}
-                             containerClassName='lg:absolute lg:top-0 lg:right-0 lg:w-1/2 relative w-full min-h-[60vh] lg:h-screen bg-radial lg:from-transparent lg:to-transparent from-muted to-background select-none'
-                             defaultName=""/>
                 </div>
+                {/* Lanyard - fills remaining space on mobile, absolute positioned on desktop */}
+                <LanyardWithControls 
+                    position={[0, 6, 20]}
+                    containerClassName='lg:absolute lg:top-0 lg:right-0 lg:w-1/2 relative w-full flex-1 min-h-[200px] lg:h-screen bg-radial lg:from-transparent lg:to-transparent from-muted to-background select-none'
+                    defaultName=""/>
             </section>
         </main>
     )

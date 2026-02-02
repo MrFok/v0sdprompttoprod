@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, Suspense } from "react";
 import Lanyard from "@/components/ui/lanyard";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -189,13 +190,17 @@ export default function LanyardWithControls({
         city='san diego'
         date='02.07.2026'
       />
-      <Lanyard
-        key={textureKey}
-        position={position}
-        containerClassName={containerClassName}
-        cardTextureUrl={cardTextureUrl}
-        canvasRef={canvasRef}
-      />
+      <ErrorBoundary>
+        <Suspense fallback={<div className="h-full w-full animate-pulse bg-muted/20" />}>
+          <Lanyard
+            key={textureKey}
+            position={position}
+            containerClassName={containerClassName}
+            cardTextureUrl={cardTextureUrl}
+            canvasRef={canvasRef}
+          />
+        </Suspense>
+      </ErrorBoundary>
       <div className="px-6 pb-8 lg:absolute lg:bottom-8 lg:right-6 lg:w-auto lg:px-0">
         <div className="mx-auto max-w-md lg:mx-0 lg:ml-auto">
           <div className="mb-4 flex items-center justify-between">

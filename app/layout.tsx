@@ -5,8 +5,8 @@ import {Analytics} from '@vercel/analytics/next'
 import './globals.css'
 import Dither from "@/components/Dither";
 
-const _geist = Geist({subsets: ["latin"]});
-const _geistMono = Geist_Mono({subsets: ["latin"]});
+const _geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
     title: 'v0 IRL — Prompt to Production | SD February 5th, 2026',
@@ -37,7 +37,7 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="en" className="dark">
+        <html lang="en" className={`dark ${_geist.variable} ${_geistMono.variable}`}>
         <body className="font-sans antialiased">
         <div className='absolute w-full h-dvh max-h-155 sm:max-h-115 md:max-h-125 lg:max-h-190 xl:max-h-195'>
             <Dither

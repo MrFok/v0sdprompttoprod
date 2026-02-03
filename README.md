@@ -1,4 +1,4 @@
-# v0 Prompt to Production Attendance Page - San Diego
+# v0 Prompt to Production Attendee Page - San Diego
 
 [Live Event Page](https://v0sdprompttoprod.vercel.app/)
 

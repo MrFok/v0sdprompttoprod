@@ -4,6 +4,8 @@ import {Geist, Geist_Mono} from 'next/font/google'
 import {Analytics} from '@vercel/analytics/next'
 import './globals.css'
 import Dither from "@/components/Dither";
+import WelcomeDialog from "@/components/welcome-dialog";
+import WelcomeButtonProvider from "@/components/welcome-button-provider";
 
 const _geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
@@ -38,6 +40,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`dark ${_geist.variable} ${_geistMono.variable}`}>
+        <head>
+            <link rel="preconnect" href="https://i.vimeocdn.com" />
+            <link rel="preconnect" href="https://f.vimeocdn.com" />
+            <link rel="preconnect" href="https://player.vimeo.com" />
+            <link rel="preload" href="https://player.vimeo.com/api/player.js" as="script" />
+        </head>
         <body className="font-sans antialiased">
         <div className='absolute w-full h-full min-h-dvh'>
             <Dither
@@ -51,8 +59,14 @@ export default function RootLayout({
                 waveFrequency={3}
                 waveSpeed={0.05}
             />
+            {/* Welcome Button - Top Right */}
+            <div className="absolute top-6 right-6 z-50">
+                <WelcomeDialog />
+            </div>
         </div>
-        {children}
+        <WelcomeButtonProvider>
+            {children}
+        </WelcomeButtonProvider>
         <Analytics/>
         </body>
         </html>

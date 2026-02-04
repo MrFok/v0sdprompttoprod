@@ -45,11 +45,11 @@ export default function HeroSection() {
     
     // Schedule times in minutes from midnight
     const scheduleTimes = [
-        { start: 10 * 60, end: 10 * 60 + 10, title: "Kickoff" },
-        { start: 10 * 60 + 10, end: 10 * 60 + 30, title: "Track selection & Teams" },
-        { start: 10 * 60 + 30, end: 12 * 60, title: "Build session" },
+        { start: 10 * 60 + 15, end: 10 * 60 + 25, title: "Kickoff" },
+        { start: 10 * 60 + 25, end: 10 * 60 + 40, title: "Track selection & Teams" },
+        { start: 10 * 60 + 40, end: 12 * 60, title: "Build session" },
         { start: 12 * 60, end: 12 * 60 + 30, title: "Ship & submit" },
-        { start: 12 * 60 + 30, end: 23 * 60, title: "Demos" }
+        { start: 12 * 60 + 30, end: 12 * 60 + 45, title: "Demos (15 min)" }
     ];
     
     const getCurrentScheduleIndex = () => {
@@ -67,20 +67,28 @@ export default function HeroSection() {
     // Compute button highlight states
     // Track selection & Teams: 10:10-10:30 (index 1)
     // Ship & submit: 12:00-12:30 (index 3)
+    // Welcome window: 10:15-10:25 (index 0)
     let highlightTracksButtons = false;
     let highlightSubmitButton = false;
+    let highlightWelcomeButton = false;
     
     if (isEventCompleted) {
         highlightTracksButtons = false;
         highlightSubmitButton = false;
+        highlightWelcomeButton = false;
     } else if (highlightOverride === 'tracks') {
         highlightTracksButtons = true;
     } else if (highlightOverride === 'ship') {
         highlightSubmitButton = true;
+    } else if (highlightOverride === 'welcome') {
+        highlightWelcomeButton = true;
     } else if (highlightOverride !== 'off') {
         // Use real time logic
         if (isEventDay) {
-            if (currentScheduleIndex === 1) {
+            if (currentScheduleIndex === 0) {
+                // Kickoff (Welcome window)
+                highlightWelcomeButton = true;
+            } else if (currentScheduleIndex === 1) {
                 // Track selection & Teams
                 highlightTracksButtons = true;
             } else if (currentScheduleIndex === 3) {

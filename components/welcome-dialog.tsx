@@ -11,8 +11,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Play, X } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { useWelcomeButton } from '@/components/welcome-button-provider';
+import { ShineBorder } from "@/components/ui/shine-border";
 
 export default function WelcomeDialog() {
   const [isVideoReady, setIsVideoReady] = useState(false);
@@ -37,21 +38,25 @@ export default function WelcomeDialog() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className={`px-4 backdrop-blur-md rounded-md transition-all duration-300 ${
+          className={`px-4 backdrop-blur-md rounded-md transition-all duration-300 relative overflow-hidden ${
             highlightWelcomeButton
-              ? 'bg-white/30 border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.6)]'
+              ? 'bg-blue-500/30 border-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.8)]'
               : 'bg-white/10 border-white/20 hover:bg-white/20'
           }`}
         >
-          <span className="text-nowrap flex items-center gap-2">
-            Welcome
-            <span className={`w-2 h-2 rounded-full ${
-              highlightWelcomeButton ? 'bg-white animate-pulse' : 'bg-white'
-            }`}></span>
+          {highlightWelcomeButton && (
+            <ShineBorder
+              duration={10}
+              borderWidth={2}
+              shineColor={['#93c5fd', '#3b82f6', '#60a5fa']}
+            />
+          )}
+          <span className="text-nowrap flex items-center gap-2 relative z-10">
+            Get Started
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-white/6 backdrop-blur-2xl border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-white/6 backdrop-blur-2xl border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto scrollbar-dark">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-white">
             Welcome to Prompt to Production

@@ -43,7 +43,7 @@ export default function WelcomeSheet() {
           </span>
         </Button>
       </SheetTrigger>
-      <SheetContent className="bg-gray-900/95 backdrop-blur-xl border-white/10 text-white overflow-y-auto">
+      <SheetContent className="bg-gray-900/95 backdrop-blur-xl border-white/10 text-white overflow-y-auto scrollbar-dark">
         <SheetHeader>
           <SheetTitle className="text-2xl font-bold text-white">
             Welcome to Prompt to Production! 🚀

@@ -5,10 +5,12 @@ import { useSearchParams } from 'next/navigation';
 
 interface WelcomeButtonContextType {
   highlightWelcomeButton: boolean;
+  highlightFreeCreditsButton: boolean;
 }
 
 const WelcomeButtonContext = createContext<WelcomeButtonContextType>({
   highlightWelcomeButton: false,
+  highlightFreeCreditsButton: false,
 });
 
 export function useWelcomeButton() {
@@ -22,6 +24,7 @@ interface WelcomeButtonProviderProps {
 export default function WelcomeButtonProvider({ children }: WelcomeButtonProviderProps) {
   const searchParams = useSearchParams();
   const [highlightWelcomeButton, setHighlightWelcomeButton] = useState(false);
+  const [highlightFreeCreditsButton, setHighlightFreeCreditsButton] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -77,25 +80,34 @@ export default function WelcomeButtonProvider({ children }: WelcomeButtonProvide
     
     const currentScheduleIndex = getCurrentScheduleIndex();
     
-    let shouldHighlight = false;
+    let shouldHighlightWelcome = false;
+    let shouldHighlightFreeCredits = false;
     
     if (!isEventCompleted) {
       if (highlightOverride === 'welcome') {
-        shouldHighlight = true;
+        shouldHighlightWelcome = true;
+      } else if (highlightOverride === 'credits') {
+        shouldHighlightFreeCredits = true;
       } else if (highlightOverride !== 'off') {
         // Use real time logic
-        if (isEventDay && currentScheduleIndex === 0) {
-          // Kickoff (Welcome window: 10:15-10:25)
-          shouldHighlight = true;
+        if (isEventDay) {
+          if (currentScheduleIndex === 0) {
+            // Kickoff (Welcome window: 10:15-10:25)
+            shouldHighlightWelcome = true;
+          } else if (currentScheduleIndex === 1 || currentScheduleIndex === 2) {
+            // Track selection & Teams (10:25-10:40) OR Build session (10:40-12:00)
+            shouldHighlightFreeCredits = true;
+          }
         }
       }
     }
     
-    setHighlightWelcomeButton(shouldHighlight);
+    setHighlightWelcomeButton(shouldHighlightWelcome);
+    setHighlightFreeCreditsButton(shouldHighlightFreeCredits);
   }, [currentTime, searchParams]);
 
   return (
-    <WelcomeButtonContext.Provider value={{ highlightWelcomeButton }}>
+    <WelcomeButtonContext.Provider value={{ highlightWelcomeButton, highlightFreeCreditsButton }}>
       {children}
     </WelcomeButtonContext.Provider>
   );

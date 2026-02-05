@@ -5,6 +5,7 @@ import {Analytics} from '@vercel/analytics/next'
 import './globals.css'
 import Dither from "@/components/Dither";
 import WelcomeDialog from "@/components/welcome-dialog";
+import FreeCreditsDialog from "@/components/free-credits-dialog";
 import WelcomeButtonProvider from "@/components/welcome-button-provider";
 
 const _geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -59,12 +60,13 @@ export default function RootLayout({
                 waveFrequency={3}
                 waveSpeed={0.05}
             />
-            {/* Welcome Button - Top Right */}
-            <div className="absolute top-6 right-6 z-50">
-                <WelcomeDialog />
-            </div>
         </div>
         <WelcomeButtonProvider>
+            {/* Welcome Buttons - Top Right */}
+            <div className="absolute top-6 right-6 z-50 flex gap-2">
+                <WelcomeDialog />
+                <FreeCreditsDialog />
+            </div>
             {children}
         </WelcomeButtonProvider>
         <Analytics/>

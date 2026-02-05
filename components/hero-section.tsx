@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import {Button} from '@/components/ui/button'
 import {TextEffect} from "@/components/motion-primitives/text-effect";
 import LanyardWithControls from "@/components/lanyard-with-controls";
 import { useSearchParams } from 'next/navigation';
 
-export default function HeroSection() {
+function HeroSectionContent() {
     const searchParams = useSearchParams();
     const highlightOverride = searchParams.get('highlight'); // 'tracks', 'ship', or 'off'
     const eventState = searchParams.get('event'); // 'completed' to force finished state
@@ -246,5 +246,13 @@ export default function HeroSection() {
                     defaultName=""/>
             </section>
         </main>
+    )
+}
+
+export default function HeroSection() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <HeroSectionContent />
+        </Suspense>
     )
 }

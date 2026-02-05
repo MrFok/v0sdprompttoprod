@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 interface WelcomeButtonContextType {
@@ -21,7 +21,7 @@ interface WelcomeButtonProviderProps {
   children: ReactNode;
 }
 
-export default function WelcomeButtonProvider({ children }: WelcomeButtonProviderProps) {
+function WelcomeButtonProviderContent({ children }: WelcomeButtonProviderProps) {
   const searchParams = useSearchParams();
   const [highlightWelcomeButton, setHighlightWelcomeButton] = useState(false);
   const [highlightFreeCreditsButton, setHighlightFreeCreditsButton] = useState(false);
@@ -110,5 +110,13 @@ export default function WelcomeButtonProvider({ children }: WelcomeButtonProvide
     <WelcomeButtonContext.Provider value={{ highlightWelcomeButton, highlightFreeCreditsButton }}>
       {children}
     </WelcomeButtonContext.Provider>
+  );
+}
+
+export default function WelcomeButtonProvider({ children }: WelcomeButtonProviderProps) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WelcomeButtonProviderContent>{children}</WelcomeButtonProviderContent>
+    </Suspense>
   );
 }

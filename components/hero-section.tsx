@@ -6,6 +6,7 @@ import {Button} from '@/components/ui/button'
 import {TextEffect} from "@/components/motion-primitives/text-effect";
 import LanyardWithControls from "@/components/lanyard-with-controls";
 import { useSearchParams } from 'next/navigation';
+import { ShineBorder } from "@/components/ui/shine-border";
 
 function HeroSectionContent() {
     const searchParams = useSearchParams();
@@ -64,6 +65,12 @@ function HeroSectionContent() {
     
     const currentScheduleIndex = getCurrentScheduleIndex();
     
+    // Event timing: 10:00 AM to 1:00 PM (13:00)
+    const eventStart = 10 * 60; // 10:00 AM
+    const eventEnd = 13 * 60; // 1:00 PM
+    const isEventTime = isEventDay && currentTimeInMinutes >= eventStart && currentTimeInMinutes < eventEnd;
+    const isEventFinished = isEventDay && currentTimeInMinutes >= eventEnd;
+    
     // Compute button highlight states
     // Track selection & Teams: 10:10-10:30 (index 1)
     // Ship & submit: 12:00-12:30 (index 3)
@@ -72,7 +79,7 @@ function HeroSectionContent() {
     let highlightSubmitButton = false;
     let highlightWelcomeButton = false;
     
-    if (isEventCompleted) {
+    if (isEventCompleted || isEventFinished) {
         highlightTracksButtons = false;
         highlightSubmitButton = false;
         highlightWelcomeButton = false;
@@ -108,9 +115,20 @@ function HeroSectionContent() {
                             {/* Status Pill */}
                             <div className='mb-2 flex justify-center lg:justify-start'>
                                 <div className="inline-flex items-center gap-2 rounded-full bg-gray-200 px-4 py-2">
-                                    <div className={`h-2 w-2 rounded-full ${isEventCompleted ? 'bg-muted-foreground' : isEventDay ? 'bg-green-500 animate-pulse' : 'bg-red-500 animate-pulse'}`}></div>
+                                    <div className={`h-2 w-2 rounded-full ${
+                                        isEventCompleted || isEventFinished 
+                                            ? 'bg-muted-foreground' 
+                                            : isEventTime 
+                                                ? 'bg-green-500 animate-pulse' 
+                                                : 'bg-red-500 animate-pulse'
+                                    }`}></div>
                                     <span className="text-sm font-medium text-gray-800">
-                                        {isEventCompleted ? 'Event completed' : isEventDay ? 'Ongoing' : 'Not started'}
+                                        {isEventCompleted || isEventFinished 
+                                            ? 'Event finished' 
+                                            : isEventTime 
+                                                ? 'Ongoing' 
+                                                : 'Not started'
+                                        }
                                     </span>
                                 </div>
                             </div>
@@ -152,13 +170,18 @@ function HeroSectionContent() {
                                         const isPast = isEventDay && currentTimeInMinutes > item.end;
                                         const isInactiveDay = !isEventDay;
                                         
+                                        // Special opacity logic: dim all items before the current one
+                                        const shouldDim = isEventDay && 
+                                            currentScheduleIndex >= 0 && 
+                                            index < currentScheduleIndex;
+                                        
                                         return (
                                             <div 
                                                 key={index} 
                                                 className={`flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg transition-all duration-300 ${
                                                     isActive 
                                                         ? 'bg-white/20 border border-white/30' 
-                                                        : isPast 
+                                                        : shouldDim
                                                             ? 'opacity-60' 
                                                             : ''
                                                 }`}
@@ -200,13 +223,21 @@ function HeroSectionContent() {
                                     asChild
                                     size="default"
                                     variant="outline"
-                                    className={`px-4 backdrop-blur-md rounded-md transition-all duration-300 ${
+                                    className={`px-4 backdrop-blur-md rounded-md transition-all duration-300 relative overflow-hidden ${
                                         highlightSubmitButton
-                                            ? 'bg-blue-500/30 border-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.6)]'
+                                            ? 'bg-blue-500/30 border-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.8)]'
                                             : 'bg-white/10 border-white/20'
-                                    }`}>
+                                    }`}
+                                >
                                     <Link href="https://v0-v0prompttoproduction2026.vercel.app/submit" target="_blank">
-                                        <span className="text-nowrap">Submit your project</span>
+                                        {highlightSubmitButton && (
+                                            <ShineBorder
+                                                duration={10}
+                                                borderWidth={2}
+                                                shineColor={['#93c5fd', '#3b82f6', '#60a5fa']}
+                                            />
+                                        )}
+                                        <span className="text-nowrap relative z-10">Submit your project</span>
                                     </Link>
                                 </Button>
                                 <Button

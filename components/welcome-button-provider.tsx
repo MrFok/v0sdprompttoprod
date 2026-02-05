@@ -94,8 +94,8 @@ function WelcomeButtonProviderContent({ children }: WelcomeButtonProviderProps) 
           if (currentScheduleIndex === 0) {
             // Kickoff (Welcome window: 10:15-10:25)
             shouldHighlightWelcome = true;
-          } else if (currentScheduleIndex === 1 || currentScheduleIndex === 2) {
-            // Track selection & Teams (10:25-10:40) OR Build session (10:40-12:00)
+          } else if (currentScheduleIndex === 2) {
+            // Build session (10:40-12:00)
             shouldHighlightFreeCredits = true;
           }
         }

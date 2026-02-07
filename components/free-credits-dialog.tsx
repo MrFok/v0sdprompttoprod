@@ -48,9 +48,10 @@ export default function FreeCreditsDialog() {
   }
   
   const currentTimeInMinutes = currentHour * 60 + currentMinute;
-  const eventStartTime = 10 * 60; // 10:00 AM in minutes
+  const eventStartTime = 10 * 60 + 30; // 10:30 AM in minutes
   
-  const shouldShowButton = isEventDay && currentTimeInMinutes >= eventStartTime;
+  const isPastEventDay = currentTime > new Date(2026, 1, 8); // After Feb 7, 2026
+  const shouldShowButton = !isPastEventDay && isEventDay && currentTimeInMinutes >= eventStartTime;
   
   useEffect(() => {
     setIsVisible(shouldShowButton);

@@ -46,11 +46,10 @@ function HeroSectionContent() {
     
     // Schedule times in minutes from midnight
     const scheduleTimes = [
-        { start: 10 * 60 + 15, end: 10 * 60 + 25, title: "Kickoff" },
-        { start: 10 * 60 + 25, end: 10 * 60 + 40, title: "Track selection & Teams" },
-        { start: 10 * 60 + 40, end: 12 * 60, title: "Build session" },
-        { start: 12 * 60, end: 12 * 60 + 30, title: "Ship & submit" },
-        { start: 12 * 60 + 30, end: 12 * 60 + 45, title: "Demos (15 min)" }
+        { start: 10 * 60 + 30, end: 10 * 60 + 40, title: "Kickoff" },
+        { start: 10 * 60 + 40, end: 10 * 60 + 50, title: "Track selection & Teams" },
+        { start: 10 * 60 + 50, end: 12 * 60 + 30, title: "Build session" },
+        { start: 12 * 60 + 30, end: 13 * 60, title: "Ship & submit" }
     ];
     
     const getCurrentScheduleIndex = () => {
@@ -65,16 +64,16 @@ function HeroSectionContent() {
     
     const currentScheduleIndex = getCurrentScheduleIndex();
     
-    // Event timing: 10:00 AM to 1:00 PM (13:00)
-    const eventStart = 10 * 60; // 10:00 AM
+    // Event timing: 10:30 AM to 1:00 PM (13:00)
+    const eventStart = 10 * 60 + 30; // 10:30 AM
     const eventEnd = 13 * 60; // 1:00 PM
     const isEventTime = isEventDay && currentTimeInMinutes >= eventStart && currentTimeInMinutes < eventEnd;
     const isEventFinished = isEventDay && currentTimeInMinutes >= eventEnd;
     
     // Compute button highlight states
-    // Track selection & Teams: 10:10-10:30 (index 1)
-    // Ship & submit: 12:00-12:30 (index 3)
-    // Welcome window: 10:15-10:25 (index 0)
+    // Track selection & Teams: 10:40-10:50 (index 1)
+    // Ship & submit: 12:30-13:00 (index 3)
+    // Welcome window: 10:30-10:40 (index 0)
     let highlightTracksButtons = false;
     let highlightSubmitButton = false;
     let highlightWelcomeButton = false;
@@ -170,10 +169,10 @@ function HeroSectionContent() {
                                         const isPast = isEventDay && currentTimeInMinutes > item.end;
                                         const isInactiveDay = !isEventDay;
                                         
-                                        // Special opacity logic: dim all items before the current one
+                                        // Special opacity logic: dim all items before the current one, or all items when event is finished
                                         const shouldDim = isEventDay && 
-                                            currentScheduleIndex >= 0 && 
-                                            index < currentScheduleIndex;
+                                            ((currentScheduleIndex >= 0 && index < currentScheduleIndex) ||
+                                            isEventFinished);
                                         
                                         return (
                                             <div 

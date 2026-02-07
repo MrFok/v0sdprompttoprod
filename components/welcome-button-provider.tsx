@@ -61,11 +61,10 @@ function WelcomeButtonProviderContent({ children }: WelcomeButtonProviderProps) 
     
     // Schedule times in minutes from midnight
     const scheduleTimes = [
-      { start: 10 * 60 + 15, end: 10 * 60 + 25, title: "Kickoff" },
-      { start: 10 * 60 + 25, end: 10 * 60 + 40, title: "Track selection & Teams" },
-      { start: 10 * 60 + 40, end: 12 * 60, title: "Build session" },
-      { start: 12 * 60, end: 12 * 60 + 30, title: "Ship & submit" },
-      { start: 12 * 60 + 30, end: 12 * 60 + 45, title: "Demos (15 min)" }
+      { start: 10 * 60 + 30, end: 10 * 60 + 40, title: "Kickoff" },
+      { start: 10 * 60 + 40, end: 10 * 60 + 50, title: "Track selection & Teams" },
+      { start: 10 * 60 + 50, end: 12 * 60 + 30, title: "Build session" },
+      { start: 12 * 60 + 30, end: 13 * 60, title: "Ship & submit" }
     ];
     
     const getCurrentScheduleIndex = () => {
@@ -92,10 +91,10 @@ function WelcomeButtonProviderContent({ children }: WelcomeButtonProviderProps) 
         // Use real time logic
         if (isEventDay) {
           if (currentScheduleIndex === 0) {
-            // Kickoff (Welcome window: 10:15-10:25)
+            // Kickoff (Welcome window: 10:30-10:40)
             shouldHighlightWelcome = true;
           } else if (currentScheduleIndex === 2) {
-            // Build session (10:40-12:00)
+            // Build session (10:50-12:30)
             shouldHighlightFreeCredits = true;
           }
         }

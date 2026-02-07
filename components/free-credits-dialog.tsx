@@ -101,7 +101,7 @@ export default function FreeCreditsDialog() {
             <p className="text-white/80">
               Go to the{" "}
               <a 
-                href="https://v0.app" 
+                href="https://v0.app/ref/TI498A" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 underline transition-colors"

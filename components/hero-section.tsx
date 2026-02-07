@@ -7,6 +7,7 @@ import {TextEffect} from "@/components/motion-primitives/text-effect";
 import LanyardWithControls from "@/components/lanyard-with-controls";
 import { useSearchParams } from 'next/navigation';
 import { ShineBorder } from "@/components/ui/shine-border";
+import TipsDialog from "@/components/tips-dialog";
 
 function HeroSectionContent() {
     const searchParams = useSearchParams();
@@ -265,6 +266,7 @@ function HeroSectionContent() {
                                         <span className="text-nowrap">Browse Submitted Projects</span>
                                     </Link>
                                 </Button>
+                                <TipsDialog />
                             </div>
                         </div>
                     </div>

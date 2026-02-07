@@ -7,6 +7,7 @@ import Dither from "@/components/Dither";
 import WelcomeDialog from "@/components/welcome-dialog";
 import FreeCreditsDialog from "@/components/free-credits-dialog";
 import WelcomeButtonProvider from "@/components/welcome-button-provider";
+import Link from "next/link";
 
 const _geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
